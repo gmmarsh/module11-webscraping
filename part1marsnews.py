@@ -3,6 +3,7 @@
 #import dependencies
 from splinter import Browser
 from bs4 import BeautifulSoup as soup
+import json
 
 #define browser
 browser = Browser('chrome')
@@ -35,8 +36,10 @@ for i in range(len(news_title)):
     news_dict['preview'] = news_preview[i].text
     news_list.append(news_dict)
     
-#print the news_list
-print(news_list)
+#export news_list to a json file called 'news_summary' using the open function in write mode
+#the json.dump function writes the new_list into a json_file
+with open('news_summary.json', 'w') as json_file:
+    json.dump(news_list, json_file)
 
 #quit the browser
 browser.quit()
