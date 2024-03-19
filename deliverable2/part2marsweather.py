@@ -6,6 +6,7 @@ from splinter import Browser
 from bs4 import BeautifulSoup as soup
 import matplotlib.pyplot as plt
 import pandas as pd
+import os
 
 # an automated browser instance
 browser = Browser('chrome')
@@ -117,7 +118,7 @@ plt.ylabel('Temperature (C)')
 plt.show()
 
 #save the plot as png image in current directory
-plt.savefig("/Users/grahammarsh/Documents/GitHub/module11-webscraping/avg_low_temp_by_month.png")
+plt.savefig("/Users/grahammarsh/Documents/GitHub/module11-webscraping/deliverable2/avg_low_temp_by_month.png")
 
 # sorted bar plot of the average temperature by month from lowest to highest
 avg_low_temp.sort_values().plot(kind='bar')
@@ -127,7 +128,7 @@ plt.ylabel('Temperature (C)')
 plt.show()
 
 #save the plot as png image in current directory
-plt.savefig("/Users/grahammarsh/Documents/GitHub/module11-webscraping/sorted_avg_low_temp_by_month.png")
+plt.savefig("/Users/grahammarsh/Documents/GitHub/module11-webscraping/deliverable2/sorted_avg_low_temp_by_month.png")
 
 # average pressure by month
 avg_pressure = df.groupby('month')['pressure'].mean()
@@ -146,7 +147,7 @@ plt.ylabel('Pressure (Pa)')
 plt.show()
 
 #save the plot as png image in current directory
-plt.savefig("/Users/grahammarsh/Documents/GitHub/module11-webscraping/avg_pressure_by_month.png")
+plt.savefig("/Users/grahammarsh/Documents/GitHub/module11-webscraping/deliverable2/avg_pressure_by_month.png")
 
 # plot of the daily min temperature by elapsed sol
 df.plot(x='sol', y='min_temp')
@@ -156,10 +157,23 @@ plt.ylabel('Temperature (C)')
 plt.show()
 
 #save the plot as png image in current directory
-plt.savefig("/Users/grahammarsh/Documents/GitHub/module11-webscraping/daily_min_temp_by_elapsed_sol.png")
+plt.savefig("/Users/grahammarsh/Documents/GitHub/module11-webscraping/deliverable2/daily_min_temp_by_elapsed_sol.png")
 
 # CSV file of df DataFrame to current directory
 df.to_csv('mars_weather.csv', index=False)
+
+# export df.datatypes, months, sols, avg. low temp by month and avg. pressure by month to a text file
+with open('mars_weather_data.txt', 'w') as f:
+    f.write('Data Types\n')
+    f.write(str(df.dtypes))
+    f.write('\n\nMonths\n')
+    f.write(str(months))
+    f.write('\n\nSols\n')
+    f.write(str(sols))
+    f.write('\n\nAverage Low Temperature by Month\n')
+    f.write(str(avg_low_temp))
+    f.write('\n\nAverage Pressure by Month\n')
+    f.write(str(avg_pressure))
 
 # browser quit
 browser.quit()
