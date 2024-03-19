@@ -50,12 +50,16 @@ print()
 print('Mars Weather DataFrame')
 print('------------------------------------------------------')
 print(df)
+print('------------------------------------------------------')
+print()
 
 # Print the data types
 print()
 print('Original Data Types')
 print('------------------------------------------------------')
 print(df.dtypes)
+print('------------------------------------------------------')
+print()
 
 # changed the data types for analysis
 df['terrestrial_date'] = pd.to_datetime(df['terrestrial_date'])
@@ -75,32 +79,90 @@ print()
 print('New Data Types')
 print('------------------------------------------------------')
 print(df.dtypes)
+print('------------------------------------------------------')
+print()
 
 # How many months exist on Mars?
 months = df.groupby('month').size()
 print()
 print('How many month exist on Mars?')
-print()
+print('------------------------------------------------------')
 print(months)
+print('------------------------------------------------------')
+print()
 
 # how many Martian days worth of data are there?
 sols = df['sol'].nunique()
 print()
 print('how many Martian days worth of data are there?')
-print()
+print('------------------------------------------------------')
 print(f"There are {sols} Martian days worth of data.")
+print('------------------------------------------------------')
 print()
 
 # What is the average low temperature by month?
 avg_low_temp = df.groupby('month')['min_temp'].mean()
+print()
 print('What is the average low temperature by month?')
-print()
+print('------------------------------------------------------')
 print(avg_low_temp)
+print('------------------------------------------------------')
 print()
 
+# bar plot of the average tempature by month
+avg_low_temp.plot(kind='bar')
+plt.title('Average Low Temperature by Month')
+plt.xlabel('Month')
+plt.ylabel('Temperature (C)')
+plt.show()
 
+#save the plot as png image in current directory
+plt.savefig("/Users/grahammarsh/Documents/GitHub/module11-webscraping/avg_low_temp_by_month.png")
 
+# sorted bar plot of the average temperature by month from lowest to highest
+avg_low_temp.sort_values().plot(kind='bar')
+plt.title('Sorted Average Low Temperature by Month')
+plt.xlabel('Month')
+plt.ylabel('Temperature (C)')
+plt.show()
 
+#save the plot as png image in current directory
+plt.savefig("/Users/grahammarsh/Documents/GitHub/module11-webscraping/sorted_avg_low_temp_by_month.png")
+
+# average pressure by month
+avg_pressure = df.groupby('month')['pressure'].mean()
+print()
+print('Average Pressure by Month')
+print('------------------------------------------------------')
+print(avg_pressure)
+print('------------------------------------------------------')
+print()
+
+# sorted bar plot of pressure by month from lowest to highest
+avg_pressure.sort_values().plot(kind='bar')
+plt.title('Average Pressure by Month')
+plt.xlabel('Month')
+plt.ylabel('Pressure (Pa)')
+plt.show()
+
+#save the plot as png image in current directory
+plt.savefig("/Users/grahammarsh/Documents/GitHub/module11-webscraping/avg_pressure_by_month.png")
+
+# plot of the daily min temperature by elapsed sol
+df.plot(x='sol', y='min_temp')
+plt.title('Daily Min Temperature by Elapsed Sol')
+plt.xlabel('Elapsed Sol')
+plt.ylabel('Temperature (C)')
+plt.show()
+
+#save the plot as png image in current directory
+plt.savefig("/Users/grahammarsh/Documents/GitHub/module11-webscraping/daily_min_temp_by_elapsed_sol.png")
+
+# CSV file of df DataFrame to current directory
+df.to_csv('mars_weather.csv', index=False)
+
+# browser quit
+browser.quit()
 
 
 
